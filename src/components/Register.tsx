@@ -13,6 +13,21 @@ export const Register = ({ onRegister }: Props) => {
   const [error, setError] = useState("");
 
   const handleSubmit = async () => {
+    // ① バリデーションを先に行う
+    if (name.trim() === "") {
+      setError("名前を入力してください");
+      return;
+    }
+    if (email.trim() === "" || !/\S+@\S+\.\S+/.test(email)) {
+      setError("有効なメールアドレスを入力してください");
+      return;
+    }
+    if (password.trim() === "" || password.length < 6) {
+      setError("パスワードは6文字以上で入力してください");
+      return;
+    }
+
+    // ② 問題なければAPIを叩く
     try {
       await register(name, email, password);
       onRegister();

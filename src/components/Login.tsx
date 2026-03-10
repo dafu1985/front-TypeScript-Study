@@ -12,6 +12,14 @@ export const Login = ({ onLogin }: Props) => {
   const [error, setError] = useState("");
 
   const handleSubmit = async () => {
+    if (email.trim() === "" || !/\S+@\S+\.\S+/.test(email)) {
+      setError("有効なメールアドレスを入力してください");
+      return;
+    }
+    if (password.trim() === "" || password.length < 1) {
+      setError("パスワードは1文字以上で入力してください");
+      return;
+    }
     try {
       const data = await login(email, password);
       onLogin(data.token);
