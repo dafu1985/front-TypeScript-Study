@@ -1,15 +1,18 @@
 // src/App.tsx
 import { useState } from "react";
 import { Login } from "./components/Login";
-import { UserList } from "./components/UserList";
 import { Register } from "./components/Register";
+import { UserList } from "./components/UserList";
 
 function App() {
-  const [page, setPage] = useState<"login" | "register" | "home">("login");
-  const [token, setToken] = useState("");
+  const [page, setPage] = useState<"login" | "register" | "home">(
+    localStorage.getItem("token") ? "home" : "login",
+  );
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [message, setMessage] = useState("");
 
   const handleLogin = (token: string) => {
+    localStorage.setItem("token", token);
     setToken(token);
     setPage("home");
   };
@@ -20,6 +23,7 @@ function App() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
     setToken("");
     setPage("login");
   };
