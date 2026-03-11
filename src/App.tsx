@@ -30,20 +30,35 @@ function App() {
 
   return (
     <div>
-      <h1>管理システム</h1>
       {page === "home" && <UserList token={token} onLogout={handleLogout} />}
       {page === "login" && (
-        <>
-          {message && <p style={{ color: "green" }}>{message}</p>}
+        <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+          {message && <p className="text-green-600 text-sm mb-4">{message}</p>}
           <Login onLogin={handleLogin} />
-          <button onClick={() => setPage("register")}>新規登録はこちら</button>
-        </>
+          <p className="mt-4 text-sm text-gray-500">
+            アカウントをお持ちでない方は
+            <button
+              onClick={() => setPage("register")}
+              className="text-blue-500 hover:underline ml-1"
+            >
+              新規登録
+            </button>
+          </p>
+        </div>
       )}
       {page === "register" && (
-        <>
+        <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
           <Register onRegister={handleRegister} />
-          <button onClick={() => setPage("login")}>ログインはこちら</button>
-        </>
+          <p className="mt-4 text-sm text-gray-500">
+            既にアカウントをお持ちの方は
+            <button
+              onClick={() => setPage("login")}
+              className="text-blue-500 hover:underline ml-1"
+            >
+              ログイン
+            </button>
+          </p>
+        </div>
       )}
     </div>
   );

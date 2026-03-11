@@ -45,31 +45,37 @@ export const Register = ({ onRegister }: Props) => {
   };
 
   return (
-    <div>
-      <h2>登録</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
+      <h2 className="text-2xl font-bold mb-6 text-center text-gray-700">
+        登録
+      </h2>
+      {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
       <input
         type="text"
         placeholder="名前"
         value={name}
         onChange={(e) => setName(e.target.value)}
+        className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
-      <br />
       <input
         type="email"
         placeholder="メールアドレス"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
-      <br />
       <input
         type="password"
         placeholder="パスワード"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        className="w-full border border-gray-300 rounded px-3 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
-      <br />
-      <button onClick={handleSubmit} disabled={isLoading}>
+      <button
+        onClick={handleSubmit}
+        disabled={isLoading}
+        className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 disabled:opacity-50 transition"
+      >
         {isLoading ? "登録中..." : "登録"}
       </button>
     </div>
