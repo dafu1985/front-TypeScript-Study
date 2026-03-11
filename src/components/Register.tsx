@@ -11,19 +11,25 @@ export const Register = ({ onRegister }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
+    setIsLoading(true);
+    setError("");
     // ① バリデーションを先に行う
     if (name.trim() === "") {
       setError("名前を入力してください");
+      setIsLoading(false);
       return;
     }
     if (email.trim() === "" || !/\S+@\S+\.\S+/.test(email)) {
       setError("有効なメールアドレスを入力してください");
+      setIsLoading(false);
       return;
     }
     if (password.trim() === "" || password.length < 6) {
       setError("パスワードは6文字以上で入力してください");
+      setIsLoading(false);
       return;
     }
 
@@ -33,6 +39,8 @@ export const Register = ({ onRegister }: Props) => {
       onRegister();
     } catch (e: any) {
       setError(e.response?.data?.message || "登録に失敗しました");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -61,7 +69,9 @@ export const Register = ({ onRegister }: Props) => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <br />
-      <button onClick={handleSubmit}>登録</button>
+      <button onClick={handleSubmit} disabled={isLoading}>
+        {isLoading ? "登録中..." : "登録"}
+      </button>
     </div>
   );
 };

@@ -10,14 +10,19 @@ export const Login = ({ onLogin }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
+    setIsLoading(true);
+    setError("");
     if (email.trim() === "" || !/\S+@\S+\.\S+/.test(email)) {
       setError("有効なメールアドレスを入力してください");
+      setIsLoading(false);
       return;
     }
     if (password.trim() === "" || password.length < 1) {
       setError("パスワードは1文字以上で入力してください");
+      setIsLoading(false);
       return;
     }
     try {
@@ -25,6 +30,8 @@ export const Login = ({ onLogin }: Props) => {
       onLogin(data.token);
     } catch (e: any) {
       setError(e.response?.data?.message || "ログインに失敗しました");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -46,7 +53,9 @@ export const Login = ({ onLogin }: Props) => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <br />
-      <button onClick={handleSubmit}>ログイン</button>
+      <button onClick={handleSubmit} disabled={isLoading}>
+        {isLoading ? "ログイン中..." : "ログイン"}
+      </button>
     </div>
   );
 };
