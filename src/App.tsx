@@ -8,12 +8,10 @@ function App() {
   const [page, setPage] = useState<"login" | "register" | "home">(
     localStorage.getItem("token") ? "home" : "login",
   );
-  const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [message, setMessage] = useState("");
 
   const handleLogin = (token: string) => {
     localStorage.setItem("token", token);
-    setToken(token);
     setPage("home");
   };
 
@@ -24,13 +22,12 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setToken("");
     setPage("login");
   };
 
   return (
     <div>
-      {page === "home" && <UserList token={token} onLogout={handleLogout} />}
+      {page === "home" && <UserList onLogout={handleLogout} />}
       {page === "login" && (
         <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
           {message && <p className="text-green-600 text-sm mb-4">{message}</p>}

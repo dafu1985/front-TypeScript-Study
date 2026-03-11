@@ -9,18 +9,17 @@ type User = {
 };
 
 type Props = {
-  token: string;
   onLogout: () => void;
 };
 
-export const UserList = ({ token, onLogout }: Props) => {
+export const UserList = ({ onLogout }: Props) => {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const data = await getUsers(token);
+        const data = await getUsers();
         setUsers(data);
       } catch (e: any) {
         setError(e.response?.data?.message || "取得に失敗しました");
@@ -28,7 +27,7 @@ export const UserList = ({ token, onLogout }: Props) => {
     };
 
     fetchUsers();
-  }, [token]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
