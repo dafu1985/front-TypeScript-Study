@@ -4,13 +4,13 @@ import { Login } from "./components/Login";
 import { Register } from "./components/Register";
 import { UserList } from "./components/UserList";
 import { useState } from "react";
+import { logout } from "./api/auth";
 
 function App() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (token: string) => {
-    localStorage.setItem("token", token);
+  const handleLogin = () => {
     navigate("/");
   };
 
@@ -19,12 +19,12 @@ function App() {
     navigate("/login");
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
+  const handleLogout = async () => {
+    await logout();
     navigate("/login");
   };
 
-  const isLoggedIn = !!localStorage.getItem("token");
+  const isLoggedIn = !!localStorage.getItem("accessToken");
 
   return (
     <Routes>
